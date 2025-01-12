@@ -1,169 +1,225 @@
-# DeFi ZKP Governance System for Digital Democracy 🔐
+# DeFi ZKP Governance
 
-A privacy-focused decentralized governance platform that integrates Zero-Knowledge Proofs (ZKPs) and ERC-725 identity standards for maintaining digital democracy in DeFi without compromising personal data.
+A privacy-preserving governance system for DeFi protocols using Zero-Knowledge Proofs (ZKP).
 
-## 📝 Project Overview
+## Overview
 
-This project implements a decentralized governance system that enables:
-- Privacy-preserving voting through ZKPs
-- Self-sovereign identity management via ERC-725
-- Transparent proposal management without revealing voter identities
+This project implements a decentralized governance system that allows token holders to participate in voting while maintaining privacy through zero-knowledge proofs. The system uses identity verification and ZKP verification to ensure only eligible participants can vote while keeping their voting choices private.
 
-## 🛠️ VS Code Setup
+## Features
 
-### Required Extensions
-1. **Solidity**
-   - Name: `solidity`
-   - Publisher: Nomic Foundation
-   - Purpose: Smart contract development
+- Privacy-preserving voting using ZKPs
+- Identity verification system
+- On-chain governance proposals
+- Secure vote verification
+- Anonymous vote casting
+- Sybil resistance through ZK identity proofs
+- EIP-712 compliant signatures
+- Gas-optimized voting mechanisms
 
-2. **Hardhat for VS Code**
-   - Purpose: Ethereum development environment support
+## Prerequisites
 
-3. **ESLint**
-   - Purpose: JavaScript code linting
+- Node.js >= 18
+- npm or yarn
+- Hardhat
+- Circom (for ZKP circuit compilation)
+- Solidity ^0.8.19
 
-4. **Prettier**
-   - Purpose: Code formatting
+## Installation
 
-### Workspace Settings
-```json
-{
-  "editor.formatOnSave": true,
-  "solidity.compileUsingRemoteVersion": "v0.8.28",
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
-}
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/defi-zkp-governance.git
+cd defi-zkp-governance
 ```
 
-## 📁 Project Structure
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment:
+```bash
+cp .env.example .env
+# Configure your environment variables
+```
+
+## Project Structure
 
 ```
 defi-zkp-governance/
-├── contracts/                 # Smart Contracts
-│   ├── IdentityRegistry.sol   # ERC-725 Implementation
-│   ├── ZKPVerifier.sol        # Zero-knowledge Proof Verification
-│   └── PrivateGovernance.sol  # Main Governance Logic
-├── circuits/                  # ZKP Circuits
-│   └── vote.circom           # Voting Circuit
-├── frontend/                  # Frontend Application
-│   ├── src/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── index.html
-├── scripts/                   # Deployment Scripts
-└── test/                     # Test Files
+├── README.md
+├── circuits/                # ZKP circuits
+│   ├── pot12_0000.ptau     # Powers of Tau files
+│   ├── pot12_0001.ptau
+│   ├── pot12_final.ptau
+│   └── vote.circom         # Voting circuit implementation
+├── contracts/              # Smart contracts
+│   ├── Identity.sol        # Identity verification contract
+│   ├── Lock.sol           # Basic locking mechanism contract
+│   ├── PrivacyPreservingDeFiGovernance.sol
+│   ├── PrivacyPreservingGovernance.sol
+│   └── ZKPVerifier.sol    # ZKP verification contract
+├── ignition/              # Hardhat Ignition deployment
+│   └── modules/
+│       └── Lock.js        # Lock contract deployment module
+├── scripts/               # Deployment and utility scripts
+│   └── deploy.js         # Main deployment script
+├── test/                 # Test files
+│   ├── Governance.test.js
+│   └── Lock.js          # Lock contract tests
+├── hardhat.config.js     # Hardhat configuration
+├── package.json          # Project dependencies
+└── package-lock.json     # Locked dependencies
 ```
 
-## 🚀 Development Setup
+### Key Components
 
-1. **Install Dependencies**
-```bash
-# Install project dependencies
-npm install
+1. **Circuits/**
+   - Contains Circom circuit implementations
+   - Powers of Tau ceremony files
+   - Main voting circuit in `vote.circom`
 
-# Install frontend dependencies
-cd frontend && npm install
-```
+2. **Contracts/**
+   - Core smart contract implementations
+   - Multiple governance contract variants
+   - Identity and verification systems
 
-2. **Configure Environment**
-Create `.env` file:
-```env
-PRIVATE_KEY=your_private_key
-INFURA_PROJECT_ID=your_infura_id
-```
+3. **Test/**
+   - Comprehensive test suites
+   - Governance and Lock contract tests
 
-3. **Compile Contracts**
+4. **Ignition/**
+   - Hardhat Ignition deployment modules
+   - Structured deployment configurations
+
+5. **Scripts/**
+   - Deployment and maintenance scripts
+
+## Technical Architecture
+
+### Zero-Knowledge Proof System
+- Uses Groth16 proving system
+- Circuit implementation in Circom 2.0
+- Efficient on-chain verification
+- Proof generation in browser using WebAssembly
+
+### Smart Contract Architecture
+- Modular design pattern
+- Upgradeable proxy pattern support
+- Gas-optimized storage layout
+- EIP-712 structured data hashing
+- OpenZeppelin security standards
+
+### Identity System
+- Sybil-resistant identity verification
+- Privacy-preserving membership proofs
+- Revocation support
+- Hierarchical identity management
+
+## Development
+
+1. Compile contracts:
 ```bash
 npx hardhat compile
 ```
 
-4. **Run Local Network**
+2. Compile ZKP circuits:
 ```bash
-npx hardhat node
+npm run compile:circuits
 ```
 
-5. **Deploy Contracts**
+3. Run tests:
 ```bash
-npx hardhat run scripts/deploy.js --network localhost
+npx hardhat test
 ```
 
-## 🧪 Testing
+4. Deploy contracts:
+```bash
+npx hardhat run scripts/deploy.js
+```
+
+## Testing
+
+The project includes comprehensive tests:
 
 ```bash
 # Run all tests
-npx hardhat test
+npm test
 
-# Run specific test
+# Run specific test suite
 npx hardhat test test/Governance.test.js
+
+# Run tests with gas reporting
+REPORT_GAS=true npx hardhat test
+
+# Run coverage analysis
+npx hardhat coverage
 ```
 
-## 🔍 Core Components
+## Deployment
 
-### Smart Contracts
-- `IdentityRegistry.sol`: Manages user identities using ERC-725
-- `ZKPVerifier.sol`: Handles zero-knowledge proof verification
-- `PrivateGovernance.sol`: Implements core governance functionality
-
-### Frontend
-- React components for user interaction
-- Web3 integration for blockchain interaction
-- Chakra UI for responsive design
-
-## 🔒 Privacy Features
-
-1. **Zero-Knowledge Proofs**
-   - Enables vote verification without revealing voter identity
-   - Maintains transaction privacy
-
-2. **Identity Management**
-   - ERC-725 based self-sovereign identity
-   - Private credential verification
-
-3. **Vote Privacy**
-   - Anonymous voting mechanism
-   - Proof validation without data exposure
-
-## 🎯 Implementation Details
-
-### Contract Deployment
-```javascript
-// Example deployment script
-const main = async () => {
-  const IdentityRegistry = await ethers.getContractFactory("IdentityRegistry");
-  const identityRegistry = await IdentityRegistry.deploy();
-  await identityRegistry.deployed();
-  console.log("IdentityRegistry deployed to:", identityRegistry.address);
-};
+### Local Development
+```bash
+npx hardhat node
+npx hardhat run scripts/deploy.js --network localhost
 ```
 
-### Frontend Integration
-```javascript
-// Example React component
-const VotingComponent = () => {
-  const castVote = async (proposalId, vote) => {
-    const proof = await generateZKProof(vote);
-    await contract.castVote(proposalId, proof);
-  };
-};
+### Test Networks
+```bash
+npx hardhat run scripts/deploy.js --network sepolia
 ```
 
-## 📚 Resources
+### Production
+```bash
+npx hardhat run scripts/deploy.js --network mainnet
+```
 
-- [Hardhat Documentation](https://hardhat.org/getting-started/)
-- [ERC-725 Standard](https://eips.ethereum.org/EIPS/eip-725)
-- [Zero-Knowledge Proofs](https://zkp.science/)
+## Security Considerations
 
-## 👥 Contributing
+- All contracts follow Checks-Effects-Interactions pattern
+- Reentrancy guards implemented
+- Integer overflow protection
+- Access control implementation
+- Timelock mechanisms for critical operations
+- Emergency pause functionality
+
+## Performance Optimizations
+
+- Optimized storage layout
+- Batch processing support
+- Gas-efficient vote aggregation
+- Minimal on-chain storage
+- Efficient proof verification
+
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
 
-This project is licensed under the MIT License.
+## Dependencies
 
----
-Developed with ❤️ for NYU Project
+- `@nomicfoundation/hardhat-toolbox`: ^5.0.0
+- `@openzeppelin/contracts`: ^4.9.6
+- `ethers`: ^6.1.0
+- `hardhat`: ^2.19.0
+- `circomlib`: ^2.0.5
+- `snarkjs`: ^0.7.5
+
+## Security
+
+This project is in development and has not been audited. Use at your own risk.
+
+## Support
+
+For support, please open an issue in the repository.
+
+## Acknowledgments
+
+- OpenZeppelin for secure contract implementations
+- Circom team for ZKP circuit compiler
+- Hardhat team for development environment
