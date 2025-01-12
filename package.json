@@ -1,18 +1,26 @@
 {
   "name": "defi-zkp-governance",
   "version": "1.0.0",
-  "description": "",
+  "description": "Privacy-preserving governance system for DeFi protocols using ZKPs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "compile:circuits": "cd circuits && circom vote.circom --r1cs --wasm",
+    "deploy": "hardhat run scripts/deploy.js",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "node": "hardhat node",
+    "clean": "hardhat clean",
+    "coverage": "hardhat coverage"
   },
-  "keywords": [],
+  "keywords": ["defi", "zkp", "governance", "ethereum", "privacy"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@openzeppelin/contracts": "^4.9.6",
     "ethers": "^6.1.0",
+    "dotenv": "^16.4.5",
     "hardhat": "^2.19.0"
   },
   "dependencies": {
